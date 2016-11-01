@@ -1,0 +1,48 @@
+#!/usr/bin/with-contenv sh
+
+if [ ! -d "/opt/daspanel/log/$DASPANEL_GUUID/php5.6-fpm" ]; then
+	mkdir -p /opt/daspanel/log/$DASPANEL_GUUID/php5.6-fpm
+fi
+
+if [ -d "/opt/daspanel/data/$DASPANEL_GUUID/conf/php5.6/etc/php5.6/fpm.d/pools" ]; then
+    if [ -d "/etc/php5/fpm.d/pools" ]; then
+        rm -Rf /etc/php5/fpm.d/pools
+    fi
+    ln -sf /opt/daspanel/data/$DASPANEL_GUUID/conf/php5.6/etc/php5.6/fpm.d/pools /etc/php5/fpm.d/pools
+else
+    if [ ! -d "/etc/php5/fpm.d/pools" ]; then
+	    mkdir -p /etc/php5/fpm.d/pools
+    fi
+fi
+
+if [ ! -d "/opt/daspanel/data/$DASPANEL_GUUID/sessions" ]; then
+        mkdir /opt/daspanel/data/$DASPANEL_GUUID/sessions
+fi
+
+if [ ! -d "/opt/daspanel/data/$DASPANEL_GUUID/content" ]; then
+        mkdir /opt/daspanel/data/$DASPANEL_GUUID/content
+fi
+
+[[ -z "${PHP_MEMORY_LIMIT}" ]] && export PHP_MEMORY_LIMIT="1G"
+[[ -z "${PHP_POST_MAX_SIZE}" ]] && export PHP_POST_MAX_SIZE="2G"
+[[ -z "${PHP_UPLOAD_MAX_FILESIZE}" ]] && export PHP_UPLOAD_MAX_FILESIZE="2G"
+[[ -z "${PHP_MAX_EXECUTION_TIME}" ]] && export PHP_MAX_EXECUTION_TIME="3600"
+[[ -z "${PHP_MAX_INPUT_TIME}" ]] && export PHP_MAX_INPUT_TIME="3600"
+[[ -z "${PHP_DATE_TIMEZONE}" ]] && export PHP_DATE_TIMEZONE="UTC"
+[[ -z "${PHP_LOG_LEVEL}" ]] && export PHP_LOG_LEVEL="warning"
+[[ -z "${PHP_MAX_CHILDREN}" ]] && export PHP_MAX_CHILDREN="75"
+[[ -z "${PHP_MAX_REQUESTS}" ]] && export PHP_MAX_REQUESTS="500"
+[[ -z "${PHP_PROCESS_IDLE_TIMEOUT}" ]] && export PHP_PROCESS_IDLE_TIMEOUT="10s"
+
+export PHP_CHDIR="/opt/daspanel/data/$DASPANEL_GUUID/content"
+export PHP_SESSION_PATH="/opt/daspanel/data/$DASPANEL_GUUID/sessions"
+
+/usr/bin/templater -d -p php \
+  -o /etc/php5/php.ini \
+  /opt/daspanel/conf-templates/etc/php5/php.ini.tmpl
+
+/usr/bin/templater -d -p php \
+  -o /etc/php5/php-fpm.conf \
+  /opt/daspanel/conf-templates/etc/php5/php-fpm.conf.tmpl
+
+

@@ -1,0 +1,28 @@
+
+version: '2'
+services:
+    daspanel-php-fpm-7.0:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: daspanel/php-fpm-7.0
+        volumes:
+            - daspanel-data:/opt/daspanel/data
+        networks:
+            - frontend
+            - backend
+        env_file:
+            - daspanel.env
+
+volumes:
+    daspanel-data:
+        external:
+            name: daspanel-data
+
+networks:  
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+
+
