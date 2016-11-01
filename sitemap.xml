@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    
+    <url>
+     <loc>https://daspanel.github.io/php-fpm-7.0/</loc>
+     <lastmod>2016-11-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+        
+    <url>
+     <loc>https://daspanel.github.io/php-fpm-7.0/help/</loc>
+     <lastmod>2016-11-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>https://daspanel.github.io/php-fpm-7.0/help/compose/</loc>
+     <lastmod>2016-11-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>https://daspanel.github.io/php-fpm-7.0/help/advanced/</loc>
+     <lastmod>2016-11-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>https://daspanel.github.io/php-fpm-7.0/help/development/</loc>
+     <lastmod>2016-11-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>https://daspanel.github.io/php-fpm-7.0/howto/</loc>
+     <lastmod>2016-11-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+    <url>
+     <loc>https://daspanel.github.io/php-fpm-7.0/issues/</loc>
+     <lastmod>2016-11-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>https://daspanel.github.io/php-fpm-7.0/contributing/</loc>
+     <lastmod>2016-11-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+        
+    <url>
+     <loc>https://daspanel.github.io/php-fpm-7.0/authors/</loc>
+     <lastmod>2016-11-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>https://daspanel.github.io/php-fpm-7.0/changelog/</loc>
+     <lastmod>2016-11-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+</urlset>
