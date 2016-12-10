@@ -1,17 +1,17 @@
 #!/usr/bin/with-contenv sh
 
-if [ ! -d "/opt/daspanel/log/$DASPANEL_GUUID/php5.6-fpm" ]; then
-	mkdir -p /opt/daspanel/log/$DASPANEL_GUUID/php5.6-fpm
+if [ ! -d "/opt/daspanel/log/$DASPANEL_GUUID/php7.0-fpm" ]; then
+	mkdir -p /opt/daspanel/log/$DASPANEL_GUUID/php7.0-fpm
 fi
 
-if [ -d "/opt/daspanel/data/$DASPANEL_GUUID/conf/php5.6/etc/php5.6/fpm.d/pools" ]; then
-    if [ -d "/etc/php5/fpm.d/pools" ]; then
-        rm -Rf /etc/php5/fpm.d/pools
+if [ -d "/opt/daspanel/data/$DASPANEL_GUUID/conf/php7.0/etc/php7.0/fpm.d/pools" ]; then
+    if [ -d "/etc/php7/fpm.d/pools" ]; then
+        rm -Rf /etc/php7/fpm.d/pools
     fi
-    ln -sf /opt/daspanel/data/$DASPANEL_GUUID/conf/php5.6/etc/php5.6/fpm.d/pools /etc/php5/fpm.d/pools
+    ln -sf /opt/daspanel/data/$DASPANEL_GUUID/conf/php7.0/etc/php7.0/fpm.d/pools /etc/php7/fpm.d/pools
 else
-    if [ ! -d "/etc/php5/fpm.d/pools" ]; then
-	    mkdir -p /etc/php5/fpm.d/pools
+    if [ ! -d "/etc/php7/fpm.d/pools" ]; then
+	    mkdir -p /etc/php7/fpm.d/pools
     fi
 fi
 
@@ -38,11 +38,11 @@ export PHP_CHDIR="/opt/daspanel/data/$DASPANEL_GUUID/content"
 export PHP_SESSION_PATH="/opt/daspanel/data/$DASPANEL_GUUID/sessions"
 
 /usr/bin/templater -d -p php \
-  -o /etc/php5/php.ini \
-  /opt/daspanel/conf-templates/etc/php5/php.ini.tmpl
+  -o /etc/php7/php.ini \
+  /opt/daspanel/conf-templates/etc/php7/php.ini.tmpl
 
 /usr/bin/templater -d -p php \
-  -o /etc/php5/php-fpm.conf \
-  /opt/daspanel/conf-templates/etc/php5/php-fpm.conf.tmpl
+  -o /etc/php7/php-fpm.conf \
+  /opt/daspanel/conf-templates/etc/php7/php-fpm.conf.tmpl
 
 
