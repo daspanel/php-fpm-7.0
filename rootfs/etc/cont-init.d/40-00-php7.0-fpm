@@ -4,14 +4,19 @@ if [ ! -d "/opt/daspanel/log/$DASPANEL_GUUID/php7.0-fpm" ]; then
 	mkdir -p /opt/daspanel/log/$DASPANEL_GUUID/php7.0-fpm
 fi
 
-if [ -d "/opt/daspanel/data/$DASPANEL_GUUID/conf/php7.0/etc/php7.0/fpm.d/pools" ]; then
-    if [ -d "/etc/php7/fpm.d/pools" ]; then
-        rm -Rf /etc/php7/fpm.d/pools
+# Remove installed default conf files
+if [ -d "/etc/php7/php-fpm.d" ]; then
+    rm /etc/php7/php-fpm.d/*
+fi
+
+if [ -d "/opt/daspanel/data/$DASPANEL_GUUID/conf/php7.0/etc/php7.0/php-fpm.d/pools" ]; then
+    if [ -d "/etc/php7/php-fpm.d/pools" ]; then
+        rm -Rf /etc/php7/php-fpm.d/pools
     fi
-    ln -sf /opt/daspanel/data/$DASPANEL_GUUID/conf/php7.0/etc/php7.0/fpm.d/pools /etc/php7/fpm.d/pools
+    ln -sf /opt/daspanel/data/$DASPANEL_GUUID/conf/php7.0/etc/php7.0/php-fpm.d/pools /etc/php7/php-fpm.d/pools
 else
-    if [ ! -d "/etc/php7/fpm.d/pools" ]; then
-	    mkdir -p /etc/php7/fpm.d/pools
+    if [ ! -d "/etc/php7/php-fpm.d/pools" ]; then
+	    mkdir -p /etc/php7/php-fpm.d/pools
     fi
 fi
 
@@ -45,4 +50,7 @@ export PHP_SESSION_PATH="/opt/daspanel/data/$DASPANEL_GUUID/sessions"
   -o /etc/php7/php-fpm.conf \
   /opt/daspanel/conf-templates/etc/php7/php-fpm.conf.tmpl
 
+/usr/bin/templater -d -p php \
+  -o /etc/php7/php-fpm.d/daspanel.conf \
+  /opt/daspanel/conf-templates/etc/php7/php-fpm.d/daspanel.conf.tmpl
 
