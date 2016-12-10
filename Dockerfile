@@ -1,13 +1,15 @@
 FROM daspanel/alpine-base-edge
 MAINTAINER Abner G Jacobsen - http://daspanel.com <admin@daspanel.com>
 
-ENV TZ="UTC"
+# Set default env variables
+ENV \
+    # Stop container initialization if error occurs in cont-init.d, fix-attrs.d script's
+    S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
 
-# Stop container initialization if error occurs in cont-init.d fix-attrs.d script's
-ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
+    # Timezone
+    TZ="UTC" 
 
-LABEL php_version="7.0" architecture="amd64"
-
+# PHP modules to install
 ARG PHP_MODULES="php7-ctype php7-curl php7-dom php7-gd php7-iconv php7-intl \
     php7-json php7-mcrypt php7-mysqli php7-openssl \
     php7-pdo php7-pdo_mysql php7-pdo_pgsql php7-pdo_sqlite php7-pear \
