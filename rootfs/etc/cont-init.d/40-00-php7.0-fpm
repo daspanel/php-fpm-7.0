@@ -50,7 +50,13 @@ export PHP_SESSION_PATH="/opt/daspanel/data/$DASPANEL_GUUID/sessions"
   -o /etc/php7/php-fpm.conf \
   /opt/daspanel/conf-templates/etc/php7/php-fpm.conf.tmpl
 
+# Default php daemon for sites
 /usr/bin/templater -d -p php \
   -o /etc/php7/php-fpm.d/daspanel.conf \
   /opt/daspanel/conf-templates/etc/php7/php-fpm.d/daspanel.conf.tmpl
+
+# Php-fpm for daspanel services
+/usr/bin/templater -d -p php \
+  -o /etc/php7/php-fpm.d/services.conf \
+  /opt/daspanel/conf-templates/etc/php7/php-fpm.d/services.conf.tmpl
 
