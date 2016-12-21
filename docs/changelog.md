@@ -25,9 +25,11 @@ Released by Abner G Jacobsen, Sat 10 Dec 2016 -
 [see the diff](https://github.com/admindaspanel/php-fpm-7.0/compare/...#diff)
 ______________
 
-### 0.1.1-9a8f407
+### 0.1.2
 __Changes__
 
+- bumped to version 0.1.2
+- Minor release.
 - Added adminer as an Daspanel service.
 - See changes in CHANGELOG.md
 - bumped to version 0.1.1
@@ -48,7 +50,7 @@ __Contributors__
 - Abner G Jacobsen
 
 Released by Abner G Jacobsen, Wed 21 Dec 2016 -
-[see the diff](https://github.com/admindaspanel/php-fpm-7.0/compare/d104183e3fee7b70bdf0b26e51d5bc864894a557...0.1.1-9a8f407#diff)
+[see the diff](https://github.com/admindaspanel/php-fpm-7.0/compare/d104183e3fee7b70bdf0b26e51d5bc864894a557...0.1.2#diff)
 ______________
 
 
