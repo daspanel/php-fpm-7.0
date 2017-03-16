@@ -104,7 +104,7 @@ pm = ondemand
 ; forget to tweak pm.* to fit your needs.
 ; Note: Used when pm is set to 'static', 'dynamic' or 'ondemand'
 ; Note: This value is mandatory.
-pm.max_children = {{ envString "MAX_CHILDREN" }}
+pm.max_children = {{getenv "PHP_MAX_CHILDREN" "75"}}
 
 ; The number of child processes created on startup.
 ; Note: Used only when pm is set to 'dynamic'
@@ -124,13 +124,13 @@ pm.max_spare_servers = 3
 ; The number of seconds after which an idle process will be killed.
 ; Note: Used only when pm is set to 'ondemand'
 ; Default Value: 10s
-pm.process_idle_timeout = {{ envString "PROCESS_IDLE_TIMEOUT" }}
+pm.process_idle_timeout = {{getenv "PHP_PROCESS_IDLE_TIMEOUT" "10s"}}
 
 ; The number of requests each child process should execute before respawning.
 ; This can be useful to work around memory leaks in 3rd party libraries. For
 ; endless request processing specify '0'. Equivalent to PHP_FCGI_MAX_REQUESTS.
 ; Default Value: 0
-pm.max_requests = {{ envString "MAX_REQUESTS" }}
+pm.max_requests = {{getenv "PHP_MAX_REQUESTS" "500"}}
 
 ; The URI to view the FPM status page. If this value is not set, no URI will be
 ; recognized as a status page. It shows the following informations:
@@ -352,7 +352,7 @@ pm.max_requests = {{ envString "MAX_REQUESTS" }}
 ; Chdir to this directory at the start.
 ; Note: relative path can be used.
 ; Default Value: current directory or / when chroot
-chdir = {{ envString "CHDIR" }}
+chdir = {{getenv "PHP_CHDIR" "/opt/daspanel/data"}}
 
 ; Redirect worker stdout and stderr into main error log. If not set, stdout and
 ; stderr will be redirected to /dev/null according to FastCGI specs.

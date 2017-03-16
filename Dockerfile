@@ -1,4 +1,4 @@
-FROM daspanel/alpine-base-edge
+FROM daspanel/alpine-base
 MAINTAINER Abner G Jacobsen - http://daspanel.com <admin@daspanel.com>
 
 # Set default env variables
@@ -35,5 +35,5 @@ RUN apk update && \
 COPY rootfs /
 
 # Expose ports for the service
-EXPOSE 9000
+EXPOSE 9000 9001
 

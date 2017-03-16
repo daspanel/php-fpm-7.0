@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv sh
 
-if [ ! -d "/opt/daspanel/log/$DASPANEL_GUUID/php7.0-fpm" ]; then
-	mkdir -p /opt/daspanel/log/$DASPANEL_GUUID/php7.0-fpm
+if [ ! -d "/opt/daspanel/log/$DASPANEL_SYS_UUID/php7.0-fpm" ]; then
+	mkdir -p /opt/daspanel/log/$DASPANEL_SYS_UUID/php7.0-fpm
 fi
 
 # Remove installed default conf files
@@ -9,23 +9,23 @@ if [ -d "/etc/php7/php-fpm.d" ]; then
     rm /etc/php7/php-fpm.d/*
 fi
 
-if [ -d "/opt/daspanel/data/$DASPANEL_GUUID/conf/php7.0/etc/php7.0/php-fpm.d/pools" ]; then
+if [ -d "/opt/daspanel/data/$DASPANEL_SYS_UUID/conf/php7.0/etc/php7.0/php-fpm.d/pools" ]; then
     if [ -d "/etc/php7/php-fpm.d/pools" ]; then
         rm -Rf /etc/php7/php-fpm.d/pools
     fi
-    ln -sf /opt/daspanel/data/$DASPANEL_GUUID/conf/php7.0/etc/php7.0/php-fpm.d/pools /etc/php7/php-fpm.d/pools
+    ln -sf /opt/daspanel/data/$DASPANEL_SYS_UUID/conf/php7.0/etc/php7.0/php-fpm.d/pools /etc/php7/php-fpm.d/pools
 else
     if [ ! -d "/etc/php7/php-fpm.d/pools" ]; then
 	    mkdir -p /etc/php7/php-fpm.d/pools
     fi
 fi
 
-if [ ! -d "/opt/daspanel/data/$DASPANEL_GUUID/sessions" ]; then
-        mkdir /opt/daspanel/data/$DASPANEL_GUUID/sessions
+if [ ! -d "/opt/daspanel/data/$DASPANEL_SYS_UUID/sessions" ]; then
+        mkdir /opt/daspanel/data/$DASPANEL_SYS_UUID/sessions
 fi
 
-if [ ! -d "/opt/daspanel/data/$DASPANEL_GUUID/content" ]; then
-        mkdir /opt/daspanel/data/$DASPANEL_GUUID/content
+if [ ! -d "/opt/daspanel/data/$DASPANEL_SYS_UUID/content" ]; then
+        mkdir /opt/daspanel/data/$DASPANEL_SYS_UUID/content
 fi
 
 [[ -z "${PHP_MEMORY_LIMIT}" ]] && export PHP_MEMORY_LIMIT="1G"
@@ -39,24 +39,28 @@ fi
 [[ -z "${PHP_MAX_REQUESTS}" ]] && export PHP_MAX_REQUESTS="500"
 [[ -z "${PHP_PROCESS_IDLE_TIMEOUT}" ]] && export PHP_PROCESS_IDLE_TIMEOUT="10s"
 
-export PHP_CHDIR="/opt/daspanel/data/$DASPANEL_GUUID/content"
-export PHP_SESSION_PATH="/opt/daspanel/data/$DASPANEL_GUUID/sessions"
+export PHP_CHDIR="/opt/daspanel/data/$DASPANEL_SYS_UUID/content"
+export PHP_SESSION_PATH="/opt/daspanel/data/$DASPANEL_SYS_UUID/sessions"
 
-/usr/bin/templater -d -p php \
-  -o /etc/php7/php.ini \
-  /opt/daspanel/conf-templates/etc/php7/php.ini.tmpl
+/usr/bin/gomplate -d cfg=file:///opt/daspanel/data/$DASPANEL_SYS_UUID/db/sysconfig.json \
+  < /opt/daspanel/conf-templates/etc/php7/php.ini.tmpl \
+  > /etc/php7/php.ini
 
-/usr/bin/templater -d -p php \
-  -o /etc/php7/php-fpm.conf \
-  /opt/daspanel/conf-templates/etc/php7/php-fpm.conf.tmpl
+/usr/bin/gomplate -d cfg=file:///opt/daspanel/data/$DASPANEL_SYS_UUID/db/sysconfig.json \
+  < /opt/daspanel/conf-templates/etc/php7/php-fpm.conf.tmpl \
+  > /etc/php7/php-fpm.conf
 
 # Default php daemon for sites
-/usr/bin/templater -d -p php \
-  -o /etc/php7/php-fpm.d/daspanel.conf \
-  /opt/daspanel/conf-templates/etc/php7/php-fpm.d/daspanel.conf.tmpl
+/usr/bin/gomplate -d cfg=file:///opt/daspanel/data/$DASPANEL_SYS_UUID/db/sysconfig.json \
+  < /opt/daspanel/conf-templates/etc/php7/php-fpm.d/daspanel.conf.tmpl \
+  > /etc/php7/php-fpm.d/daspanel.conf
 
 # Php-fpm for daspanel services
-/usr/bin/templater -d -p php \
-  -o /etc/php7/php-fpm.d/services.conf \
-  /opt/daspanel/conf-templates/etc/php7/php-fpm.d/services.conf.tmpl
+/usr/bin/gomplate -d cfg=file:///opt/daspanel/data/$DASPANEL_SYS_UUID/db/sysconfig.json \
+  < /opt/daspanel/conf-templates/etc/php7/php-fpm.d/services.conf.tmpl \
+  > /etc/php7/php-fpm.d/services.conf
+
+# secure daspanel
+chown -R daspanel:daspanel /opt/daspanel/data
+chown -R daspanel:daspanel /opt/daspanel/log
 
